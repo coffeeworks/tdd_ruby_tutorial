@@ -1,4 +1,5 @@
 require './movie.rb'
+require './movie_printer.rb'
 
 describe Movie do
   it "returns its title" do
@@ -46,7 +47,10 @@ describe Movie do
     movie.info.should == "Life Aquatic. Available in: DVD"
 
     movie = Movie.new("Life Aquatic", {vhs: true, dvd: true, bluray: true})
-    movie.info.should == "Life Aquatic. Available in: VHS, DVD, Blu-ray"
+    movie.info.should == "Life Aquatic. Available in: VHS, DVD and Blu-ray"
+
+    movie = Movie.new("Life Aquatic", {dvd: true, vhs: true})
+    movie.info.should == "Life Aquatic. Available in: VHS and DVD"
 
     movie = Movie.new("Life Aquatic")
     movie.info.should == "Life Aquatic. Not available"
@@ -88,6 +92,26 @@ describe Movie do
     movie.in_one_word.should == "Excelent"
 
     # Tip: Use a case statement
+  end
+
+  context "Pretty printing" do
+    it "prints a nice box" do
+      movie = Movie.new("Rushmore", {year: 1998, vhs: true})
+      movie.rate(4)
+
+      movie_printer = MoviePrinter.new(movie)
+
+      box = movie_printer.print_box
+
+      lines = box.split("\n")
+
+      lines[0].should == '----------------------------------------'
+      lines[1].should == '|           Rushmore (1998)            |'
+      lines[2].should == '|                                      |'
+      lines[3].should == '|  Review: Good                        |'
+      lines[4].should == '|  Available in: VHS                   |'
+      lines[5].should == '----------------------------------------'
+    end
   end
 
 end
