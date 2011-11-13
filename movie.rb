@@ -69,7 +69,11 @@ class Movie
     if f.empty?
       "Not available"
     else
-      "Available in: #{f.join(', ')}"
+      last = f.pop
+      formats_str = ""
+      formats_str << "#{f.join(', ')} and " unless f.empty?
+      formats_str << last
+      "Available in: #{formats_str}"
     end
   end
 
