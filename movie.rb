@@ -1,13 +1,43 @@
 class Movie
-  def initialize(title, vhs = false, dvd = false, bluray = false)
+  def initialize(title, params = {})
     @title = title
-    @vhs = vhs
-    @dvd = dvd
-    @bluray = bluray
+    @year = params[:year]
+    @vhs = params[:vhs]
+    @dvd = params[:dvd]
+    @bluray = params[:bluray]
   end
 
   def title
-    @title
+    str = @title
+    str << " (#{@year})" if @year
+    str
+  end
+
+  def rate(stars)
+    @rating = if stars < 1
+      1
+    elsif (1..5).member?(stars)
+      stars
+    else
+      5
+    end
+  end
+
+  def rating
+    @rating
+  end
+
+  def in_one_word
+    case @rating
+      when 1..2
+        "Bad"
+      when 2..4
+        "Good"
+      when 5
+        "Excelent"
+      else
+        "Unknown"
+    end
   end
 
   def vhs?
@@ -40,6 +70,12 @@ class Movie
       "Not available"
     else
       "Available in: #{f.join(', ')}"
-    end 
+    end
+  end
+
+  def released_years_ago
+    return unless @year
+
+    Time.now.year - @year
   end
 end
