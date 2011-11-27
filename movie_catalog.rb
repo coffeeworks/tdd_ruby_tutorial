@@ -9,6 +9,26 @@ class MovieCatalog
     @movies
   end
 
+  def by_year(year)
+    self.all.select{|movie| movie.year == year}
+  end
+
+  def top10
+    self.all.sort_by{|movie| -movie.rating}[0..9]
+  end
+
+  def counts_by_year
+    counts = {}
+    self.all.each do |movie|
+      if counts[movie.year]
+        counts[movie.year] += 1
+      else
+        counts[movie.year] = 1
+      end
+    end
+    counts
+  end
+
   protected
 
   def load_movies
