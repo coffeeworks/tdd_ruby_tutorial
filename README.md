@@ -51,3 +51,6 @@ Commit the results
 
     git commit -am "Implementation for spec 3"
 
+## Whats next
+
+Continue with **Day 2** at <https://github.com/coffeeworks/tdd_ruby_tutorial/tree/day2>
